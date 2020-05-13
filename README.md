@@ -21,3 +21,21 @@ Administration tool to manage all the security settings for ASP.NET Identity app
 * Start debugger (F5) in Visual Studio
 
 ![](images/create-project.png)
+
+### Install Angular Material and Flex-Layout
+
+```console
+c:\...\AspIdAdmin.Web\ClientApp
+λ ng add @angular/material
+? Choose a prebuilt theme name...: Indigo/Pink
+? Set up global Angular Material typography styles? Yes
+? Set up browser animations for Angular Material? Yes
+
+λ npm i @angular/flex-layout --save
+```
+
+### Create Angular Modules, Services and Components
+
+```console
+ng g m angular-material --flat
+```
