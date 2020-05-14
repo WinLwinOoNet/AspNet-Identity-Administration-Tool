@@ -1,0 +1,37 @@
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  position: fixed;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  padding: 0;
+  min-width: 260px;
+  background-color: #fff;
+  box-shadow: 6px 0 6px rgba(0,0,0,.1);
+}
+
+mat-sidenav-content {
+  min-height: 100vh;
+  padding: 80px 3rem 2rem;
+}
+  
+/* :host {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+mat-drawer {
+    width: 250px;
+}
+
+mat-drawer-container {
+    height: 100%;
+}
+
+mat-drawer-content {
+    padding: 20px;
+}   */

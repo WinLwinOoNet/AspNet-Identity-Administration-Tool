@@ -16,8 +16,7 @@ Administration tool to manage all the security settings for ASP.NET Identity app
   * Location: `C:\Projects\AspNet-Identity-Administration-Tool`
   * Solution name: `AspIdAdmin`
   * Authentication: `Individual User Accounts`
-  * Advanced: configure for HTTPS
-* Optiona: close the Visual Studio and rename *AspIdAdmin* folder to *src* for Git repository
+* Optional: close the Visual Studio and rename *AspIdAdmin* folder to *src* for Git repository
 * Start debugger (F5) in Visual Studio
 
 ![](images/create-project.png)
@@ -37,5 +36,14 @@ c:\...\AspIdAdmin.Web\ClientApp
 ### Create Angular Modules, Services and Components
 
 ```console
+c:\...\AspIdAdmin.Web\ClientApp
 ng g m angular-material --flat
+
+ng g c shared/sidebar
+ng g c shared/header
+ng g c shared/footer
+
+ng g m users/user --flat
+ng g s users/user --flat
+ng g c users/user-list --flat
 ```
