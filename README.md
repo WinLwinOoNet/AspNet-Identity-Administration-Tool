@@ -1,5 +1,5 @@
 # ASP.NET Identity Administration Tool
-Administration tool to manage all the security settings for ASP.NET Identity application.
+Administration tool to manage all the security settings for ASP.NET Identity application. Inspired by [ASP.NET Web Site Administration Tool](https://en.wikipedia.org/wiki/ASP.NET_Web_Site_Administration_Tool).
 
 ## Requirements
 1. Visual Studio 2019
@@ -46,4 +46,8 @@ ng g c shared/footer
 ng g m users/user --flat
 ng g s users/user --flat
 ng g c users/user-list --flat
+ng g c users/user-detail --flat
+ng g c users/user-edit --flat
 ```
+## Serverside dependencies
+System.Linq.Dynamic.Core
