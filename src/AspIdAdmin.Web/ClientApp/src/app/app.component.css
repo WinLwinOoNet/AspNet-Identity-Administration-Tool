@@ -15,23 +15,5 @@ mat-sidenav {
 
 mat-sidenav-content {
   min-height: 100vh;
-  padding: 80px 3rem 2rem;
+  padding: 80px 2rem 2rem;
 }
-  
-/* :host {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
-mat-drawer {
-    width: 250px;
-}
-
-mat-drawer-container {
-    height: 100%;
-}
-
-mat-drawer-content {
-    padding: 20px;
-}   */

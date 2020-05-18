@@ -40,6 +40,8 @@ Nice to have features
 
 ### Install Angular Material and Flex-Layout
 
+Note: as of today, `flex-layout@9.0.0-beta.x` is not compitable with Angular 8.
+
 ```console
 c:\...\AspIdAdmin.Web\ClientApp
 λ ng add @angular/material
@@ -47,7 +49,7 @@ c:\...\AspIdAdmin.Web\ClientApp
 ? Set up global Angular Material typography styles? Yes
 ? Set up browser animations for Angular Material? Yes
 
-λ npm i @angular/flex-layout --save
+λ npm i @angular/flex-layout@8.0.0-beta.27 --save
 ```
 
 ### Create Angular Modules, Services and Components

@@ -12,7 +12,7 @@ import { ApiResult } from '../base.service';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  public displayedColumns: string[] = ['email'];
+  public displayedColumns: string[] = ['id', 'email'];
   public users: MatTableDataSource<User>;
 
   defaultPageIndex: number = 0;
@@ -23,8 +23,8 @@ export class UserListComponent implements OnInit {
   defaultFilterColumn: string = "email";
   filterQuery: string = null;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
     private userService: UserService) { }
@@ -33,11 +33,11 @@ export class UserListComponent implements OnInit {
     this.loadData(null);
   }
 
-  loadData(query: string = null){
+  loadData(query: string = null) {
     var pageEvent = new PageEvent();
     pageEvent.pageIndex = this.defaultPageIndex;
     pageEvent.pageSize = this.defaultPageSize;
-    if(query) {
+    if (query) {
       this.filterQuery = query;
     }
     this.getData(pageEvent);
@@ -45,7 +45,7 @@ export class UserListComponent implements OnInit {
 
   getData(pageEvent: PageEvent) {
     console.log(this.sort, this.sort.active);
-    var sortColumn = (this.sort && this.sort.active) ? this.sort.active : this.defaultSortColumn;    
+    var sortColumn = (this.sort && this.sort.active) ? this.sort.active : this.defaultSortColumn;
     var sortOrder = (this.sort && this.sort.active) ? this.sort.direction : this.defaultSortOrder;
     var filterColumn = (this.filterQuery) ? this.defaultFilterColumn : null;
     var filterQuery = (this.filterQuery) ? this.filterQuery : null;

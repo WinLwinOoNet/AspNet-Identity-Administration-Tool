@@ -1,3 +1,8 @@
 table {
     width: 100%;
 }
+
+.mat-column-id {
+  flex: 0 0 75px;
+  justify-content: center;
+}

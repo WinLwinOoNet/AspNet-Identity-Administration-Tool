@@ -7,20 +7,20 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class UserService
-    extends BaseService {
-      
-    constructor(
-        http: HttpClient,
-        @Inject('BASE_URL') baseUrl: string) {
-        super(http, baseUrl);
-    }
+  extends BaseService {
+
+  constructor(
+    http: HttpClient,
+    @Inject('BASE_URL') baseUrl: string) {
+    super(http, baseUrl);
+  }
 
   getData<ApiResult>(
     pageIndex: number,
     pageSize: number,
-    sortColumn: string, 
-    sortOrder: string, 
-    filterColumn: string, 
+    sortColumn: string,
+    sortOrder: string,
+    filterColumn: string,
     filterQuery: string): Observable<ApiResult> {
     const url = this.baseUrl + 'api/Users';
     var params = new HttpParams()
@@ -29,7 +29,7 @@ export class UserService
       .set("sortColumn", sortColumn)
       .set("sortOrder", sortOrder);
 
-    if(filterQuery) {
+    if (filterQuery) {
       params = params
         .set("filterColumn", filterColumn)
         .set("filterQuery", filterQuery)
@@ -38,7 +38,7 @@ export class UserService
     return this.http.get<ApiResult>(url, { params });
   }
 
-  get<User>(id: number): Observable<User> {
+  get<User>(id): Observable<User> {
     var url = this.baseUrl + 'api/Users/' + id;
     return this.http.get<User>(url);
   }
