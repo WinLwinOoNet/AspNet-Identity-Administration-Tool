@@ -15,8 +15,8 @@ Nice to have features
 - [ ] User login page with Angular Material layout
 - [ ] User register page with Angular Material layout
 
-### User list page
-![](images/user-list.gif)
+### Features
+![](images/features.gif)
 
 ## Requirements
 1. Visual Studio 2019
@@ -29,42 +29,66 @@ Nice to have features
 ## Create Application from Scratch
 
 * Create ASP.NET Core application with Angular template
-  * Project name: `AspIdAdmin.Web`
+  * Project name: `IdentityAdmin.Web`
   * Location: `C:\Projects\AspNet-Identity-Administration-Tool`
-  * Solution name: `AspIdAdmin`
+  * Solution name: `IdentityAdmin`
   * Authentication: `Individual User Accounts`
-* Optional: close the Visual Studio and rename *AspIdAdmin* folder to *src* for Git repository
-* Start debugger (F5) in Visual Studio
 
 ![](images/create-project.png)
+
+* Optional: close the Visual Studio and rename *IdentityAdmin* folder to *src* for Git repository
+* Start debugger (F5) in Visual Studio
 
 ### Install Angular Material and Flex-Layout
 
 ```console
-c:\...\AspIdAdmin.Web\ClientApp
+c:\...\IdentityAdmin.Web\ClientApp
 λ ng add @angular/material
 ? Choose a prebuilt theme name...: Indigo/Pink
 ? Set up global Angular Material typography styles? Yes
 ? Set up browser animations for Angular Material? Yes
 
-λ npm i @angular/flex-layout --save
+λ npm i @angular/flex-layout@8.0.0-beta.27 --save
 ```
+
+Note: as of today, the latest `flex-layout@9.0.0-beta.x` is not compitable with Angular 8 so we need to explicitly set the version.
 
 ### Create Angular Modules, Services and Components
 
 ```console
-c:\...\AspIdAdmin.Web\ClientApp
+c:\...\IdentityAdmin.Web\ClientApp
 ng g m angular-material --flat
 
-ng g c shared/sidebar
-ng g c shared/header
-ng g c shared/footer
+ng g m shared/shared --flat
+ng g c shared/sidebar --skip-import
+ng g c shared/header --skip-import
+ng g c shared/footer --skip-import
 
 ng g m users/user --flat
 ng g s users/user --flat
-ng g c users/user-list --flat
-ng g c users/user-detail --flat
-ng g c users/user-edit --flat
+ng g c users/user-list --flat --skip-import
+ng g c users/user-detail --flat --skip-import
+ng g c users/user-edit --flat --skip-import
+
+ng g m roles/role --flat
+ng g s roles/role --flat
+ng g c roles/role-list --flat --skip-import
+ng g c roles/role-detail --flat --skip-import
+ng g c roles/role-edit --flat --skip-import
 ```
-## Serverside dependencies
+
+Singleton alert using Material SnackBar
+```console
+ng g m core
+ng g m core/alert
+ng g s core/alert/alert
+```
+
+## Serverside dependencies via NuGet Package
+```console
 System.Linq.Dynamic.Core
+```
+
+## Database migration
+* If you use SQL server insidead of local database, create a database (e.g. `IdentityAdmin`) and update the connection string inside `appsettings.json`.
+* Inside package manager console, run `PM> Update-Database`.

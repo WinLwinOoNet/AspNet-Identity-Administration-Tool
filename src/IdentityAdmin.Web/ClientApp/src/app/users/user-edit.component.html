@@ -1,0 +1,65 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      {{ title }}
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form novalidate
+          (ngSubmit)="saveUser()"
+          [formGroup]="userForm"
+          ngClass.gt-xs="px-1">
+
+      <div fxLayout="row" fxLayoutWrap="wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50">
+          <div>
+            <mat-form-field fxFlex="100">
+              <mat-label>Email</mat-label>
+              <input matInput
+                     id="email"
+                     placeholder="john@example.com"
+                     formControlName="email">
+              <mat-error *ngIf="errors.email">
+                {{ errors.email }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field fxFlex="100">
+              <mat-label>Phone</mat-label>
+              <input matInput
+                     id="phone"
+                     formControlName="phone">
+              <mat-error *ngIf="errors.phone">
+                {{ errors.phone }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-select placeholder="Select roles"
+                        formControlName="roles"
+                        multiple>
+              <mat-option *ngFor="let role of roles" [value]="role">
+                {{ role }}
+              </mat-option>
+            </mat-select>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions fxLayout="row" fxLayoutGap="10px">
+    <button mat-flat-button
+            color="primary"
+            type="submit"
+            (click)="saveUser()">
+      Save
+    </button>
+    <button mat-flat-button
+            type="button"
+            [routerLink]="['/users']">
+      Cancel
+    </button>
+  </mat-card-actions>
+</mat-card>

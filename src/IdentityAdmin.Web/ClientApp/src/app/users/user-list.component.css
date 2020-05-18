@@ -1,0 +1,8 @@
+table {
+  width: 100%;
+}
+
+.mat-column-id {
+  flex: 0 0 100px;
+  justify-content: center;
+}
