@@ -6,3 +6,7 @@ table {
   flex: 0 0 100px;
   justify-content: center;
 }
+
+:host /deep/ .mat-card-header-text {
+  margin: 0 !important;
+}

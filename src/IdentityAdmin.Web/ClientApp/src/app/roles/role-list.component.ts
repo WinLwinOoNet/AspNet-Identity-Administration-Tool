@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { Role } from './role';
+import { IRole } from './role';
 import { ApiResult } from '../base.service';
 import { RoleService } from './role.service';
 import { AlertService } from '../core/alert/alert.service';
@@ -14,7 +14,7 @@ import { AlertService } from '../core/alert/alert.service';
 })
 export class RoleListComponent implements OnInit {
   public displayedColumns: string[] = ['id', 'name'];
-  public roles: MatTableDataSource<Role>;
+  public roles: MatTableDataSource<IRole>;
 
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
@@ -32,16 +32,13 @@ export class RoleListComponent implements OnInit {
     private alertService: AlertService) { }
 
   ngOnInit() {
-    this.loadData(null);
+    this.loadData();
   }
 
-  loadData(query: string = null) {
+  loadData() {
     var pageEvent = new PageEvent();
     pageEvent.pageIndex = this.defaultPageIndex;
     pageEvent.pageSize = this.defaultPageSize;
-    if (query) {
-      this.filterQuery = query;
-    }
     this.getData(pageEvent);
   }
 
@@ -52,7 +49,7 @@ export class RoleListComponent implements OnInit {
     var filterColumn = (this.filterQuery) ? this.defaultFilterColumn : null;
     var filterQuery = (this.filterQuery) ? this.filterQuery : null;
 
-    this.roleService.getData<ApiResult<Role>>(
+    this.roleService.getData<ApiResult<IRole>>(
       pageEvent.pageIndex,
       pageEvent.pageSize,
       sortColumn,
@@ -63,7 +60,7 @@ export class RoleListComponent implements OnInit {
         this.paginator.length = result.totalCount;
         this.paginator.pageIndex = result.pageIndex;
         this.paginator.pageSize = result.pageSize;
-        this.roles = new MatTableDataSource<Role>(result.data);
+        this.roles = new MatTableDataSource<IRole>(result.data);
       }, error => this.alertService.danger(error));
   }
 }

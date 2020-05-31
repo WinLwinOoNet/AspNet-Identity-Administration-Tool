@@ -34,8 +34,6 @@ Nice to have features
   * Solution name: `IdentityAdmin`
   * Authentication: `Individual User Accounts`
 
-![](images/create-project.png)
-
 * Optional: close the Visual Studio and rename *IdentityAdmin* folder to *src* for Git repository
 * Start debugger (F5) in Visual Studio
 
@@ -77,11 +75,16 @@ ng g c roles/role-detail --flat --skip-import
 ng g c roles/role-edit --flat --skip-import
 ```
 
-Singleton alert using Material SnackBar
+Singletons
 ```console
 ng g m core
+
 ng g m core/alert
 ng g s core/alert/alert
+
+ng g m core/modal
+ng g s core/modal/modal
+ng g c core/modal
 ```
 
 ## Serverside dependencies via NuGet Package

@@ -50,16 +50,23 @@
     </form>
   </mat-card-content>
   <mat-card-actions fxLayout="row" fxLayoutGap="10px">
-    <button mat-flat-button
+    <button mat-raised-button
             color="primary"
             type="submit"
-            (click)="saveUser()">
+            (click)="save($event)">
       Save
     </button>
-    <button mat-flat-button
+    <button mat-raised-button
             type="button"
-            [routerLink]="['/users']">
+            (click)="cancel($event)">
       Cancel
+    </button>
+    <span fxFlex></span>
+    <button mat-raised-button
+            color="warn"
+            type="button"
+            (click)="delete($event)">
+      Delete
     </button>
   </mat-card-actions>
 </mat-card>

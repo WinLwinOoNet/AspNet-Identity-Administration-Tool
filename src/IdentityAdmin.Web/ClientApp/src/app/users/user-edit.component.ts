@@ -5,11 +5,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription, fromEvent, merge } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { User } from './user';
+import { IUser } from './user';
 import { UserService } from './user.service';
 
 import { GenericValidator } from '../shared/generic-validator';
 import { AlertService } from '../core/alert/alert.service';
+import { ModalService, IModalContent } from '../core/modal/modal.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -23,7 +24,7 @@ export class UserEditComponent implements OnInit, AfterViewInit, OnDestroy {
   userForm: FormGroup;
   roles = ['Administrators', 'Managers'];
 
-  user: User;
+  user: IUser;
   private sub: Subscription;
 
   errors: { [key: string]: string } = {};
@@ -35,7 +36,8 @@ export class UserEditComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private userService: UserService,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    private modalService: ModalService) {
 
     this.validationMessages = {
       email: {
@@ -87,7 +89,7 @@ export class UserEditComponent implements OnInit, AfterViewInit, OnDestroy {
   getUser(id: string): void {
     if (id !== '0') {
       this.userService
-        .get<User>(id)
+        .get<IUser>(id)
         .subscribe(user => {
           this.user = user;
           this.title = `Edit User: ${this.user.email}`;
@@ -101,19 +103,19 @@ export class UserEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  saveUser(): void {
+  save(event: Event): void {
+    event.preventDefault();
     if (this.userForm.valid) {
       if (this.userForm.dirty) {
         const u = { ...this.user, ...this.userForm.value };
-
         if (u.id !== '0') {
-          this.userService.put<User>(u)
+          this.userService.put<IUser>(u)
             .subscribe(_ => {
               this.alertService.success('User was updated successfully.');
               this.onSaveComplete();
             }, error => this.alertService.danger(error));
         } else {
-          this.userService.post<User>(u)
+          this.userService.post<IUser>(u)
             .subscribe(_ => {
               this.alertService.success('User was created successfully.');
               this.onSaveComplete();
@@ -128,8 +130,45 @@ export class UserEditComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  cancel(event: Event): void {
+    event.preventDefault();
+    this.onSaveComplete();
+  }
+
+  delete(event: Event): void {
+    event.preventDefault();
+    const modalContent: IModalContent = {
+      header: 'Delete User',
+      body: 'Are you sure you want to delete this user?',
+      cancelButtonText: 'No',
+      OKButtonText: 'Yes',
+      cancelButtonVisible: true
+    }
+    this.modalService.show(modalContent)
+      .subscribe(status => {
+        if (status) {
+          this.onSaveComplete();
+        }
+      });
+  }
+
   onSaveComplete(): void {
     this.userForm.reset();
     this.router.navigate(['/users']);
+  }
+
+  canDeactivate(): Promise<boolean> | boolean {
+    if (!this.userForm.dirty) {
+      return true;
+    }
+
+    // Dirty show display modal dialog to user to confirm leaving
+    const modalContent: IModalContent = {
+      header: 'Lose Unsaved Changes?',
+      body: 'You have unsaved changes! Would you like to leave the page and lose them?',
+      cancelButtonText: 'Cancel',
+      OKButtonText: 'Leave'
+    };
+    return this.modalService.show(modalContent).toPromise();
   }
 }

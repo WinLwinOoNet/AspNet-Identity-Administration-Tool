@@ -1,1 +1,51 @@
-<p>role-edit works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+      {{ title }}
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form novalidate
+          (ngSubmit)="saveUser()"
+          [formGroup]="roleForm"
+          ngClass.gt-xs="px-1">
+
+      <div fxLayout="row" fxLayoutWrap="wrap">
+        <div fxFlex="100" fxFlex.gt-sm="50">
+          <div>
+            <mat-form-field fxFlex="100">
+              <mat-label>Role Name</mat-label>
+              <input matInput
+                     id="name"
+                     formControlName="name">
+              <mat-error *ngIf="errors.name">
+                {{ errors.name }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+  <mat-card-actions fxLayout="row" fxLayoutGap="10px">
+    <button mat-raised-button
+            color="primary"
+            type="submit"
+            (click)="save($event)">
+      Save
+    </button>
+    <button mat-raised-button
+            type="button"
+            (click)="cancel($event)">
+      Cancel
+    </button>
+    <span fxFlex></span>
+    <button mat-raised-button
+            color="warn"
+            type="button"
+            (click)="delete($event)">
+      Delete
+    </button>
+  </mat-card-actions>
+</mat-card>

@@ -14,10 +14,11 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AngularMaterialModule } from './angular-material.module';
-import { SharedModule } from './shared/shared.module';
-import { UserModule } from './users/user.module';
 import { CoreModule } from './core/core.module';
 import { RoleModule } from './roles/role.module';
+import { SharedModule } from './shared/shared.module';
+import { UserModule } from './users/user.module';
+
 
 @NgModule({
   declarations: [
@@ -40,8 +41,8 @@ import { RoleModule } from './roles/role.module';
     AngularMaterialModule,
     CoreModule,
     SharedModule,
-    UserModule,
-    RoleModule
+    RoleModule,
+    UserModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }

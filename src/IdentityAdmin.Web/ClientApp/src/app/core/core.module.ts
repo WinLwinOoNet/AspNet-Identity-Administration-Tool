@@ -1,12 +1,14 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AlertModule } from './alert/alert.module';
+import { ModalModule } from './modal/modal.module';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
-    AlertModule
+    AlertModule,
+    ModalModule
   ]
 })
 export class CoreModule {

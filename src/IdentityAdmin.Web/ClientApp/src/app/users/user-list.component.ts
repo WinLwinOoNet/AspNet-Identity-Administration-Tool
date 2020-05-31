@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
-import { User } from './user';
+import { IUser } from './user';
 import { ApiResult } from '../base.service';
 import { UserService } from './user.service';
 import { AlertService } from '../core/alert/alert.service';
@@ -14,7 +14,7 @@ import { AlertService } from '../core/alert/alert.service';
 })
 export class UserListComponent implements OnInit {
   public displayedColumns: string[] = ['id', 'email'];
-  public users: MatTableDataSource<User>;
+  public users: MatTableDataSource<IUser>;
 
   defaultPageIndex: number = 0;
   defaultPageSize: number = 10;
@@ -24,6 +24,7 @@ export class UserListComponent implements OnInit {
   defaultFilterColumn: string = "email";
   filterQuery: string = null;
 
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -32,27 +33,23 @@ export class UserListComponent implements OnInit {
     private alertService: AlertService) { }
 
   ngOnInit() {
-    this.loadData(null);
+    this.loadData();
   }
 
-  loadData(query: string = null) {
+  loadData() {
     var pageEvent = new PageEvent();
     pageEvent.pageIndex = this.defaultPageIndex;
     pageEvent.pageSize = this.defaultPageSize;
-    if (query) {
-      this.filterQuery = query;
-    }
     this.getData(pageEvent);
   }
 
   getData(pageEvent: PageEvent) {
-    console.log(this.sort, this.sort.active);
     var sortColumn = (this.sort && this.sort.active) ? this.sort.active : this.defaultSortColumn;
     var sortOrder = (this.sort && this.sort.active) ? this.sort.direction : this.defaultSortOrder;
     var filterColumn = (this.filterQuery) ? this.defaultFilterColumn : null;
     var filterQuery = (this.filterQuery) ? this.filterQuery : null;
 
-    this.userService.getData<ApiResult<User>>(
+    this.userService.getData<ApiResult<IUser>>(
       pageEvent.pageIndex,
       pageEvent.pageSize,
       sortColumn,
@@ -63,7 +60,7 @@ export class UserListComponent implements OnInit {
         this.paginator.length = result.totalCount;
         this.paginator.pageIndex = result.pageIndex;
         this.paginator.pageSize = result.pageSize;
-        this.users = new MatTableDataSource<User>(result.data);
+        this.users = new MatTableDataSource<IUser>(result.data);
       }, error => this.alertService.danger(error));
   }
 }
