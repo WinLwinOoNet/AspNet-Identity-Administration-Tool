@@ -100,17 +100,16 @@ export class RoleEditComponent implements OnInit {
     if (this.roleForm.valid) {
       if (this.roleForm.dirty) {
         const u = { ...this.role, ...this.roleForm.value };
-
-        if (u.id !== '0') {
+        if (u.id !== undefined && u.id !== '0') {
           this.roleService.put<IRole>(u)
             .subscribe(_ => {
-              this.alertService.success('Role was updated successfully.');
+              this.alertService.success(`${this.role.name} role was updated successfully.`);
               this.onSaveComplete();
             }, error => this.alertService.danger(error));
         } else {
           this.roleService.post<IRole>(u)
             .subscribe(_ => {
-              this.alertService.success('Role was created successfully.');
+              this.alertService.success(`${this.role.name} role was created successfully.`);
               this.onSaveComplete();
             }, error => this.alertService.danger(error));
         }
@@ -140,7 +139,11 @@ export class RoleEditComponent implements OnInit {
     this.modalService.show(modalContent)
       .subscribe(status => {
         if (status) {
-          this.onSaveComplete();
+          this.roleService.delete<IRole>(this.role.id)
+            .subscribe(_ => {
+              this.alertService.success(`${this.role.name} role was deleted successfully.`);
+              this.onSaveComplete();
+            }, error => this.alertService.danger(error));
         }
       });
   }

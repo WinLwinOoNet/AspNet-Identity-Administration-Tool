@@ -108,7 +108,7 @@ export class UserEditComponent implements OnInit, AfterViewInit, OnDestroy {
     if (this.userForm.valid) {
       if (this.userForm.dirty) {
         const u = { ...this.user, ...this.userForm.value };
-        if (u.id !== '0') {
+        if (u.id !== undefined && u.id !== '0') {
           this.userService.put<IUser>(u)
             .subscribe(_ => {
               this.alertService.success('User was updated successfully.');

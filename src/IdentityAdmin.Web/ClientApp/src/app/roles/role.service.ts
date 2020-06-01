@@ -1,8 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BaseService, ApiResult } from '../base.service';
+import { BaseService } from '../base.service';
 import { Observable } from 'rxjs';
-import { IRole } from './role';
 
 @Injectable({
   providedIn: 'root'
@@ -39,18 +38,23 @@ export class RoleService
     return this.http.get<ApiResult>(url, { params });
   }
 
-  get<Role>(id): Observable<Role> {
+  get<IRole>(id): Observable<IRole> {
     var url = this.baseUrl + 'api/Roles/' + id;
-    return this.http.get<Role>(url);
+    return this.http.get<IRole>(url);
   }
 
-  post<Role>(item): Observable<Role> {
+  post<IRole>(item): Observable<IRole> {
     var url = this.baseUrl + 'api/Roles';
-    return this.http.post<Role>(url, item);
+    return this.http.post<IRole>(url, item);
   }
 
-  put<Role>(item): Observable<Role> {
+  put<IRole>(item): Observable<IRole> {
     var url = this.baseUrl + 'api/Roles/' + item.id;
-    return this.http.post<Role>(url, item);
+    return this.http.put<IRole>(url, item);
+  }
+
+  delete<IRole>(id): Observable<IRole> {
+    var url = this.baseUrl + 'api/Roles/' + id;
+    return this.http.delete<IRole>(url);
   }
 }

@@ -3,17 +3,17 @@ Administration tool to manage all the security settings for ASP.NET Identity app
 
 ## Features
 - [X] Angular Material layout
+- [X] Role list page
+  - [X] Search by role name
+- [X] Role create page
+- [X] Role edit page
 - [X] User list page
-- [ ] Search by email in user list page
-- [ ] User detail page
+  - [X] Search by email
 - [ ] User edit page
-- [ ] Role list page
-- [ ] Role edit page
-
-Nice to have features
+- [ ] User detail page
+- [ ] User login page with Angular Material
+- [ ] User register page with Angular Material
 - [ ] Dashboard
-- [ ] User login page with Angular Material layout
-- [ ] User register page with Angular Material layout
 
 ### Features
 ![](images/features.gif)

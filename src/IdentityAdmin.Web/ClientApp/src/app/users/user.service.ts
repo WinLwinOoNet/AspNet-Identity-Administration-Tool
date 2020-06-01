@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BaseService, ApiResult } from '../base.service';
+import { BaseService } from '../base.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -38,18 +38,18 @@ export class UserService
     return this.http.get<ApiResult>(url, { params });
   }
 
-  get<User>(id): Observable<User> {
+  get<IUser>(id): Observable<IUser> {
     var url = this.baseUrl + 'api/Users/' + id;
-    return this.http.get<User>(url);
+    return this.http.get<IUser>(url);
   }
 
-  post<User>(item): Observable<User> {
+  post<IUser>(item): Observable<IUser> {
     var url = this.baseUrl + 'api/Users';
-    return this.http.post<User>(url, item);
+    return this.http.post<IUser>(url, item);
   }
 
-  put<User>(item): Observable<User> {
+  put<IUser>(item): Observable<IUser> {
     var url = this.baseUrl + 'api/Users/' + item.id;
-    return this.http.post<User>(url, item);
+    return this.http.put<IUser>(url, item);
   }
 }

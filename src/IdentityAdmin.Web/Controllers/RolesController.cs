@@ -57,23 +57,23 @@ namespace IdentityAdmin.Web.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<RoleDto>> Get(string id)
         {
-            IdentityRole role = await _context.Roles.FindAsync(id);
+            IdentityRole identityRole = await _context.Roles.FindAsync(id);
 
-            if (role == null)
+            if (identityRole == null)
             {
                 return NotFound();
             }
 
-            return ToRoleDto(role);
+            return RoleToDto(identityRole);
         }
 
         // PUT: api/Roles/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, RoleDto role)
+        public async Task<IActionResult> Put(string id, RoleDto roleDto)
         {
-            if (id != role.Id)
+            if (id != roleDto.Id)
             {
                 return BadRequest();
             }
@@ -83,6 +83,15 @@ namespace IdentityAdmin.Web.Controllers
             {
                 return NotFound();
             }
+
+            // Ensure role name is unique.
+            IdentityRole otherRole = await _roleManager.FindByNameAsync(roleDto.Name);
+            if (otherRole != null && otherRole.Id != identityRole.Id)
+            {
+                return Conflict();
+            }
+
+            identityRole.Name = roleDto.Name;
 
             await _roleManager.UpdateAsync(identityRole);
 
@@ -95,42 +104,42 @@ namespace IdentityAdmin.Web.Controllers
         [HttpPost]
         public async Task<ActionResult<RoleDto>> Post(RoleDto role)
         {
-            if (await _roleManager.FindByNameAsync(role.Name) != null)
+            if (await _roleManager.RoleExistsAsync(role.Name))
+            {
                 return Conflict();
+            }
 
             await _roleManager.CreateAsync(new IdentityRole(role.Name));
 
-            await _context.SaveChangesAsync();
+            IdentityRole identityRole = await _roleManager.FindByNameAsync(role.Name);
 
-            role = ToRoleDto(await _roleManager.FindByNameAsync(role.Name));
-
-            return CreatedAtAction(nameof(this.Get), new { id = role.Id }, role);
+            return CreatedAtAction(
+                nameof(this.Get),
+                new { id = role.Id },
+                RoleToDto(identityRole));
         }
 
         // DELETE: api/Roles/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<RoleDto>> Delete(string id)
+        public async Task<IActionResult> Delete(string id)
         {
-            IdentityRole role = await _context.Roles.FindAsync(id);
-            if (role == null)
+            IdentityRole identityRole = await _context.Roles.FindAsync(id);
+
+            if (identityRole == null)
             {
                 return NotFound();
             }
 
-            await _roleManager.DeleteAsync(role);
+            await _roleManager.DeleteAsync(identityRole);
 
-            await _context.SaveChangesAsync();
-
-            return ToRoleDto(role);
+            return NoContent();
         }
 
-        private RoleDto ToRoleDto(IdentityRole role)
-        {
-            return new RoleDto
+        private static RoleDto RoleToDto(IdentityRole role) =>
+            new RoleDto
             {
                 Id = role.Id,
                 Name = role.Name,
             };
-        }
     }
 }
